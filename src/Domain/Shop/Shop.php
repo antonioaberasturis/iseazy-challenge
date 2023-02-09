@@ -54,4 +54,9 @@ class Shop extends Model
     {
         return $this->product_count;
     }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
 }

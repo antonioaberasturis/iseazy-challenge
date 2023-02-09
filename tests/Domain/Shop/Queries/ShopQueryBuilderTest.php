@@ -58,4 +58,17 @@ class ShopQueryBuilderTest extends ShopModuleIntegrationTestCase
 
         $this->assertEmpty($response);
     }
+
+    public function testShouldUpdateShop(): void
+    {
+        /** @var Shop $shop */
+        $shop = Shop::factory()->create();
+        /** @var Shop $newShop */
+        $newShop = Shop::factory()->id($shop->getId())->make();
+        $shop->setName($newShop->getName());
+
+        (new Shop)->query()->updateShop($shop);
+
+        $this->assertDatabaseHas($shop->getTable(), $shop->toArray());
+    }
 }

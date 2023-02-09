@@ -24,4 +24,9 @@ class ShopQueryBuilder extends Builder
     {
         return $this->where('name', $name)->limit(1)->first();
     }
+
+    public function updateShop(Shop $shop): void
+    {
+        $shop->update();
+    }
 }

@@ -67,4 +67,29 @@ abstract class ShopModuleUnitTestCase extends UnitTestCase
     {
         $this->shouldSearchShopByName($shopName, null);
     }
+
+    protected function shouldFindShop(string $id, ?Shop $return): void
+    {
+        $this->shouldMakeShopQueryBuilder();
+        $this->shopQueryBuilder()
+            ->shouldReceive('find')
+            ->once()
+            ->with($id)
+            ->andReturn($return);
+    }
+
+    protected function shouldNotFindShop(string $id): void
+    {
+        $this->shouldFindShop($id, null);
+    }
+
+    protected function shouldUpdateShop(Shop $shop): void
+    {
+        $this->shouldMakeShopQueryBuilder();
+        $this->shopQueryBuilder()
+            ->shouldReceive('updateShop')
+            ->once()
+            ->with(Mockery::on(fn(Shop $shop) => $shop->is($shop)))
+            ->andReturnNull();
+    }
 }

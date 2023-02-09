@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace Tests\Domain\Shop\Factories;
 
 use Tests\Shared\GeneratorFactory;
-use Domain\Shop\DataTransferObjects\ShopData;
+use Domain\Shop\DataTransferObjects\ShopNameData;
 
-class ShopDataFactory
+class ShopNameDataFactory
 {
     public static function make(
-        ?string $id     = null,
         ?string $name   = null,
-    ): ShopData
+    ): ShopNameData
     {
-        return new ShopData(
-            $id     ?? GeneratorFactory::random()->uuid(),
+        return new ShopNameData(
             $name   ?? GeneratorFactory::random()->name(),
         );
     }
