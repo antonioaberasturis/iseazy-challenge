@@ -5,11 +5,14 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
+        <testsuite name="Application">
+            <directory suffix="Test.php">./tests/Application</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Domain">
+            <directory suffix="Test.php">./tests/Domain</directory>
+        </testsuite>
+        <testsuite name="Shared">
+            <directory suffix="Test.php">./tests/Shared</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
@@ -21,7 +24,7 @@
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
-        <env name="DB_DATABASE" value="iseazy"/>
+        <env name="DB_DATABASE" value="testing"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
