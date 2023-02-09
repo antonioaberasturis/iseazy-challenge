@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->string('name')->unique();
-            $table->integer('product_count');
+            $table->integer('product_count')->default(0);
         });
     }
 

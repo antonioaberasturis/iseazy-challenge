@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Application\Api\Shop\ShopPostController;
 use Application\Api\Shop\ShopsGetController;
 
 /*
@@ -22,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('shops')->group(function(){
     Route::get('/', [ShopsGetController::class, '__invoke']);
+    Route::post('/', [ShopPostController::class, '__invoke']);
 });

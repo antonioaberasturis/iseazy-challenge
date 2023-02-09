@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Shop;
 
-use Domain\Shop\Queries\ShopQueryBuilder;
+use Mockery;
 use Domain\Shop\Shop;
-use Mockery\MockInterface;
 use Tests\UnitTestCase;
+use Mockery\MockInterface;
+use Domain\Shop\Queries\ShopQueryBuilder;
 
 abstract class ShopModuleUnitTestCase extends UnitTestCase
 {
@@ -40,5 +41,30 @@ abstract class ShopModuleUnitTestCase extends UnitTestCase
             ->once()
             ->withNoArgs()
             ->andReturn($return);
+    }
+
+    protected function shouldCreateNewShop(Shop $newShop): void
+    {
+        $this->shouldMakeShopQueryBuilder();
+        $this->shopQueryBuilder()
+            ->shouldReceive('createNew')
+            ->once()
+            ->with(Mockery::on(fn(Shop $shop) => $shop->is($newShop)))
+            ->andReturnNull();
+    }
+
+    protected function shouldSearchShopByName(string $shopName, ?Shop $return): void
+    {
+        $this->shouldMakeShopQueryBuilder();
+        $this->shopQueryBuilder()
+            ->shouldReceive('searchByName')
+            ->once()
+            ->with($shopName)
+            ->andReturn($return);
+    }
+
+    protected function shouldNotSearchShopByName(string $shopName): void
+    {
+        $this->shouldSearchShopByName($shopName, null);
     }
 }
