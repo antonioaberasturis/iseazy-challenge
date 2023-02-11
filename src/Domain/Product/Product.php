@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Domain\Product\Factory\ProductFactory;
 use Domain\Product\Queries\ProductQueryBuilder;
 use Domain\Product\Collections\ProductCollection;
+use Domain\Shop\Shop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {

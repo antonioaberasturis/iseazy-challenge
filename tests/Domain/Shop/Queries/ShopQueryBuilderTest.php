@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Tests\Domain\Shop\Queries;
 
 use Domain\Shop\Shop;
+use Domain\Product\Product;
+use Domain\ShopProduct\ShopProduct;
 use Domain\Shop\Collections\ShopCollection;
+use Domain\Product\Collections\ProductCollection;
 use Tests\Domain\Shop\ShopModuleIntegrationTestCase;
 
 class ShopQueryBuilderTest extends ShopModuleIntegrationTestCase
@@ -70,5 +73,25 @@ class ShopQueryBuilderTest extends ShopModuleIntegrationTestCase
         (new Shop)->query()->updateShop($shop);
 
         $this->assertDatabaseHas($shop->getTable(), $shop->toArray());
+    }
+
+    public function testShouldLoadProducts(): void
+    {
+        /** @var Shop $shop */
+        $shop = Shop::factory()->create();
+        /** @var ProductCollection $products */
+        $products = Product::factory()->count(1)->create();
+        /** @var ShopProduct $shopProducts */
+        $shopProduct = ShopProduct::factory()
+                                    ->shopId($shop->getId())
+                                    ->productId($products->first()->getId())
+                                    ->productCount(1)
+                                    ->create();
+        /** @var Shop $response */
+        $response = (new Shop)->query()->loadProducts($shop);
+
+        $this->assertTrue($shop->is($response));
+        $this->assertEquals($products->count(), $response->getProducts()->count());
+        $this->assertTrue($products->first()->is($response->getProducts()->first()));
     }
 }

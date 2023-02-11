@@ -42,7 +42,7 @@ class ShopFactory extends Factory
         ]);
     }
 
-    public function productCount(?string $productCount): static
+    public function productCount(?int $productCount): static
     {
         return $this->state(fn(array $attributes) => [
                 'product_count' => $productCount ?? $attributes['product_count'],

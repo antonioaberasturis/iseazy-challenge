@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Application\Api\Shop\ShopPutController;
 use Application\Api\Shop\ShopPostController;
 use Application\Api\Shop\ShopsGetController;
+use Application\Api\Shop\ShopDetailsGetController;
 use Application\Api\Product\ProductsPostController;
 
 /*
@@ -27,5 +28,6 @@ Route::prefix('shops')->group(function(){
     Route::get('/', [ShopsGetController::class, '__invoke']);
     Route::post('/', [ShopPostController::class, '__invoke']);
     Route::put('/{id}', [ShopPutController::class, '__invoke'])->whereUuid('id');
+    Route::get('/{id}/details', [ShopDetailsGetController::class, '__invoke'])->whereUuid('id');
     Route::post('/{id}/products', [ProductsPostController::class, '__invoke'])->whereUuid('id');
 });

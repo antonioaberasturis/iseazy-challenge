@@ -29,4 +29,9 @@ class ShopQueryBuilder extends Builder
     {
         $shop->update();
     }
+
+    public function loadProducts(Shop $shop): Shop
+    {
+        return $shop->load('products');
+    }
 }

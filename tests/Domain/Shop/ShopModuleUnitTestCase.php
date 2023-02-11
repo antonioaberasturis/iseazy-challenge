@@ -92,4 +92,14 @@ abstract class ShopModuleUnitTestCase extends UnitTestCase
             ->with(Mockery::on(fn(Shop $shop) => $shop->is($shop)))
             ->andReturnNull();
     }
+
+    protected function shouldLoadProducts(Shop $shop): void
+    {
+        $this->shouldMakeShopQueryBuilder();
+        $this->shopQueryBuilder()
+            ->shouldReceive('loadProducts')
+            ->once()
+            ->with(Mockery::on(fn(Shop $shop) => $shop->is($shop)))
+            ->andReturn($shop);
+    }
 }

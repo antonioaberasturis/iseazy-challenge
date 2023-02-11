@@ -8,7 +8,10 @@ use Domain\Shop\Factory\ShopFactory;
 use Illuminate\Database\Eloquent\Model;
 use Domain\Shop\Queries\ShopQueryBuilder;
 use Domain\Shop\Collections\ShopCollection;
+use Domain\Product\Collections\ProductCollection;
+use Domain\Product\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Shop extends Model
 {
@@ -38,6 +41,16 @@ class Shop extends Model
     public function newCollection(array $models = []): ShopCollection
     {
         return new ShopCollection($models);
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'shop_products', 'shop_id', 'product_id');
+    }
+
+    public function getProducts(): ProductCollection
+    {
+        return $this->relationLoaded('products') ? $this->products : new ProductCollection();
     }
 
     public function getId(): string
