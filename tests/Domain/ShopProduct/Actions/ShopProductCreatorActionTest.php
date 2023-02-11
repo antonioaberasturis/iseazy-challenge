@@ -7,6 +7,7 @@ namespace Tests\Domain\ShopProduct\Actions;
 use Domain\ShopProduct\ShopProduct;
 use Domain\ShopProduct\Actions\ShopProductCreatorAction;
 use Domain\ShopProduct\Collections\ShopProductCollection;
+use Illuminate\Support\Facades\Event;
 use Tests\Domain\ShopProduct\Factories\ShopProductFactory;
 use Tests\Domain\ShopProduct\ShopProductModuleUnitTestCase;
 use Tests\Domain\ShopProduct\Factories\ShopProductDataFactory;
@@ -27,6 +28,7 @@ class ShopProductCreatorActionTest extends ShopProductModuleUnitTestCase
         $shopProductsData = ShopProductDataFactory::makeCount(2);
         $shopProducts = ShopProductFactory::makeFromShopProductsData(...$shopProductsData);
         $this->shouldCreateNewManyShopProduct(...$shopProducts);
+        Event::fake();
 
         $this->creator->__invoke(...$shopProductsData);
     }
