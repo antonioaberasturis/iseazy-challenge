@@ -72,4 +72,9 @@ class Shop extends Model
     {
         $this->name = $name;
     }
+
+    public function incrementProductCount(int $count): void
+    {
+        $this->product_count += $count;
+    }
 }
