@@ -34,4 +34,9 @@ class ShopQueryBuilder extends Builder
     {
         return $shop->load('products');
     }
+
+    public function deleteShop(Shop $shop): void
+    {
+        $shop->delete();
+    }
 }

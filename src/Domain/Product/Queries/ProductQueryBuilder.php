@@ -19,4 +19,9 @@ class ProductQueryBuilder extends Builder
     {
         return $this->whereIn('name', $names)->get();
     }
+
+    public function deleteAllByIds(array $ids): void
+    {
+        $this->whereIn('id', $ids)->delete();
+    }
 }
