@@ -11,6 +11,7 @@ use Shared\EloquentTransactionWrapper;
 use Domain\Product\Requests\ProductsPostRequest;
 use Domain\Product\Actions\ProductsCreatorAction;
 use Domain\Product\DataTransferObjects\ProductsData;
+use Illuminate\Http\Response;
 
 class ProductsPostController extends ApiController
 {
@@ -18,6 +19,7 @@ class ProductsPostController extends ApiController
         private ProductsCreatorAction $creator,
         private EloquentTransactionWrapper $transactionWrapper
     ) {
+        parent::__construct();
     }
 
     public function __invoke(ProductsPostRequest $request, string $shopId): JsonResponse
@@ -27,5 +29,10 @@ class ProductsPostController extends ApiController
         $this->transactionWrapper->__invoke( fn() => $this->creator->__invoke($shopId, $productsData) );
 
         return response()->json([], 201);
+    }
+
+    protected function exceptions(): array
+    {
+        return [ProductSomeAlreadyExistsException::class => Response::HTTP_UNPROCESSABLE_ENTITY];
     }
 }

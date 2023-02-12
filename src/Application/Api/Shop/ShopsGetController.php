@@ -15,6 +15,7 @@ class ShopsGetController extends ApiController
     public function __construct(
         private readonly AllShopSearcherAction $searcher
     ) {
+        parent::__construct();
     }
 
     public function __invoke(): JsonResponse
@@ -22,5 +23,10 @@ class ShopsGetController extends ApiController
         $shops = $this->searcher->__invoke();
 
         return response()->json(ShopResource::collection($shops));
+    }
+
+    protected function exceptions(): array
+    {
+        return [];
     }
 }

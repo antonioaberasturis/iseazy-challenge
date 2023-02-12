@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Shared\DomainError;
+use Shared\ApiExceptionListener;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -43,8 +45,18 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+
         $this->reportable(function (Throwable $e) {
-            //
+
+        });
+
+        $this->renderable(function (Throwable $e, $request) {
+            
+            $exceptionListener = app()->make(ApiExceptionListener::class);
+
+            $domainErrorClass = DomainError::class;
+            if($e instanceof $domainErrorClass)
+                return $exceptionListener->handle($e);
         });
     }
 }

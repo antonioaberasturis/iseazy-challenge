@@ -14,6 +14,7 @@ class ShopDetailsGetController extends ApiController
     public function __construct(
         private readonly ShopDetailsFinderAction $detailsFinder
     ) {
+        parent::__construct();
     }
 
     public function __invoke(string $id): JsonResponse
@@ -21,5 +22,10 @@ class ShopDetailsGetController extends ApiController
         $shopDetail = $this->detailsFinder->__invoke($id);
 
         return response()->json(new ShopDetailsResource($shopDetail));
+    }
+
+    protected function exceptions(): array
+    {
+        return [];
     }
 }
