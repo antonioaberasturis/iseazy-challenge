@@ -8,6 +8,7 @@ use Shared\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Shared\EloquentTransactionWrapper;
 use Domain\Shop\Actions\ShopRemoverAction;
 use Domain\Shop\Exceptions\ShopNotExistsException;
 
@@ -15,13 +16,14 @@ class ShopDeleteController extends ApiController
 {
     public function __construct(
         private ShopRemoverAction $remover,
+        private EloquentTransactionWrapper $transactionWrapper
     ) {
         parent::__construct();
     }
 
     public function __invoke(string $id): JsonResponse
     {
-        $this->remover->__invoke($id);
+        $this->transactionWrapper->__invoke( fn() => $this->remover->__invoke($id) );
 
         return response()->json([], 204);
     }
