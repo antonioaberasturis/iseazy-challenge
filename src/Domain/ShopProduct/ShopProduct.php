@@ -40,6 +40,11 @@ class ShopProduct extends Model
         return new ShopProductCollection($models);
     }
 
+    public function existsInventory(): bool
+    {
+        return $this->count > 0;
+    }
+
     public function getShopId(): string
     {
         return $this->shop_id;

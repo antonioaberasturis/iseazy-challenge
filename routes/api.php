@@ -8,6 +8,7 @@ use Application\Api\Shop\ShopsGetController;
 use Application\Api\Shop\ShopDeleteController;
 use Application\Api\Shop\ShopDetailsGetController;
 use Application\Api\Product\ProductsPostController;
+use Application\Api\Product\ProductBuyGetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,5 @@ Route::prefix('shops')->group(function(){
     Route::delete('/{id}', [ShopDeleteController::class, '__invoke'])->whereUuid('id');
     Route::get('/{id}/details', [ShopDetailsGetController::class, '__invoke'])->whereUuid('id');
     Route::post('/{id}/products', [ProductsPostController::class, '__invoke'])->whereUuid('id');
+    Route::get('/{shopId}/products/{productId}/buy', [ProductBuyGetController::class, '__invoke'])->whereUuid('shopId')->whereUuid('productId');
 });

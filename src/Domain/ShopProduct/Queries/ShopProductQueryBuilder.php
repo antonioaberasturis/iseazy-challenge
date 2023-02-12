@@ -28,4 +28,12 @@ class ShopProductQueryBuilder extends Builder
     {
         $this->where('shop_id', $shopId)->delete();
     }
+
+    public function findByShopIdAndProductId(string $shopId, string $productId): ?ShopProduct
+    {
+        return $this->where('shop_id', $shopId)
+                    ->where('product_id', $productId)
+                    ->limit(1)
+                    ->first();
+    }
 }
